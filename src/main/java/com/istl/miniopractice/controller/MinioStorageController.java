@@ -29,11 +29,14 @@ public class MinioStorageController {
 
     @PostMapping(path = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Map<String, String> uploadFile(@RequestPart(value = "file", required = false) MultipartFile files) throws IOException {
-        log.info(files.getOriginalFilename());
+
         minioAdapter.uploadFile(files.getOriginalFilename(), files.getBytes());
+
         Map<String, String> result = new HashMap<>();
         result.put("key", files.getOriginalFilename());
+
         return result;
+
     }
 
     @GetMapping(path = "/download")
